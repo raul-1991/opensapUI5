@@ -60,6 +60,14 @@ sap.ui.define([
 		/* event handlers                                              */
 		/* =========================================================== */
 
+			/**
+			 * Event handler when the add button gets pressed
+			 * @public
+			 */
+			onAdd: function() {
+				this.getRouter().navTo("add");
+			},
+
 		/**
 		 * Triggered by the table's 'updateFinished' event: after new table
 		 * data is available, this handler method updates the table counter.
@@ -122,24 +130,37 @@ sap.ui.define([
 			}
 
 		},
-		
-		/**
-			 * Event handler when a filter tab gets pressed
-			 * @param {sap.ui.base.Event} oEvent the filter tab event
-			 * @public
-			 */
-			onQuickFilter: function(oEvent) {
-				var sKey = oEvent.getParameter("key"), //Key of the selected item
-					oFilter = this._mFilters[sKey],
-					oTable = this.byId("table"),
-					oBinding = oTable.getBinding("items");
-				if (oFilter) {
-					oBinding.filter(oFilter);
-				} else {
-					oBinding.filter([]);	
-				}
-			},
 
+		/**
+		 * Event handler when a filter tab gets pressed
+		 * @param {sap.ui.base.Event} oEvent the filter tab event
+		 * @public
+		 */
+		onQuickFilter: function (oEvent) {
+			var sKey = oEvent.getParameter("key"), //Key of the selected item
+				oFilter = this._mFilters[sKey],
+				oTable = this.byId("table"),
+				oBinding = oTable.getBinding("items");
+			if (oFilter) {
+				oBinding.filter(oFilter);
+			} else {
+				oBinding.filter([]);
+			}
+		},
+
+		/**
+		 * Event handler for press event on object identifier. 
+		 * opens detail popover to show product dimensions.
+		 * @public
+		 */
+		onShowDetailPopover: function (oEvent) {
+			var oPopover = this.byId("dimensionsPopover");
+			var oSource = oEvent.getSource();
+			//Assign binding to the popup
+			oPopover.bindElement(oSource.getBindingContext().getPath());
+			// open dialog
+			oPopover.openBy(oEvent.getParameter("domRef"));
+		},
 
 		/**
 		 * Event handler for refresh event. Keeps filter, sort
