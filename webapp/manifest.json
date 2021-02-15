@@ -32,6 +32,8 @@
 			"sap_bluecrystal"
 		]
 	},
+	
+	
 	"sap.ui5": {
 		"_version": "1.2.0",
 		"rootView": {
